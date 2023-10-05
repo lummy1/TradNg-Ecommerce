@@ -1,9 +1,10 @@
-import { Search } from '@mui/icons-material';
 import React from 'react'
 import styled from 'styled-components'
-
+import { Badge } from '@mui/material'
+import { Search, ShoppingCartOutlined } from '@mui/icons-material'
 
 const Container = styled.div`
+width: 100%;
 height: 60px;
 
 `
@@ -42,6 +43,7 @@ const Input = styled.input`
 
 const Center = styled.div`
   flex: 1;  
+  text-align: center;
 `
 
 const Logo = styled.h1`
@@ -50,26 +52,45 @@ const Logo = styled.h1`
 
 const Right = styled.div`
   flex: 1;  
+  display: flex;
+align-items: center;
+justify-content: flex-end;
 `
+const MenuItem = styled.div`
+font-size: 14px;
+cursor: pointer;
+margin-left: 25px;
+
+`
+
 
 const Navbar = () => {
     return (
         <Container>
-           <Wrapper> 
-                <Left> 
+            <Wrapper>
+                <Left>
                     <Language>ENG</Language>
                     <SearchContainer>
-                       <Input />
-                     <Search />
-                       
+                        <Input />
+                        <Search style={{color:"grey", fontSize:16}}/>
+
                     </SearchContainer>
                 </Left>
-                <Center> 
-                    <Logo>ShoppersLeague</Logo>
+                <Center>
+                    <Logo>ShoppersLeague.</Logo>
                 </Center>
-                <Right> Right </Right>
-                
-            </Wrapper> 
+                <Right>
+                    <MenuItem>REGISTER</MenuItem>
+                    <MenuItem>SIGN IN</MenuItem>
+                    <MenuItem>
+                        <Badge color="primary" badgeContent={4}>
+                            <ShoppingCartOutlined />
+                        </Badge>
+                    </MenuItem>
+
+                </Right>
+
+            </Wrapper>
         </Container>
     )
 }
