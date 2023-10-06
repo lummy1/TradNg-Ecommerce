@@ -16,6 +16,7 @@ const Wrapper = styled.div`
     margin-top: 20px;
     height: 100%;
     display: flex;
+    transition: all 1.5s ease;
     transform:translateX(${props =>props.SlideIndexer * -100}vw);
 `
 const Arrow = styled.div`
@@ -55,7 +56,7 @@ const Image = styled.img`
 `
 const InfoContainer = styled.div`
 flex:1;
-padding: 50px;
+padding: 80px;
 `
 const Title = styled.h1`
 font-size:70px
@@ -98,14 +99,15 @@ const Slider = () => {
 
 
           <Slide bg={item.bg} key={item.id}>
-            <ImageContainer>
-              <Image src={item.img} />
-            </ImageContainer>
-            <InfoContainer>
+          <InfoContainer>
               <Title>{item.title}</Title>
               <Desc>{item.desc} </Desc>
               <Button>Shop Now</Button>
             </InfoContainer>
+            <ImageContainer>
+              <Image src={item.img} />
+            </ImageContainer>
+            
           </Slide>
          
   ))}
