@@ -72,12 +72,12 @@ const Navbar = () => {
                     <Language>ENG</Language>
                     <SearchContainer>
                         <Input />
-                        <Search style={{color:"grey", fontSize:16}}/>
+                        <Search style={{border: "none", color:"grey", fontSize:16}}/>
 
                     </SearchContainer>
                 </Left>
                 <Center>
-                    <Logo>ShoppersLeague.</Logo>
+                    <Logo>ShoppersLeagueNg.</Logo>
                 </Center>
                 <Right>
                     <MenuItem>REGISTER</MenuItem>
