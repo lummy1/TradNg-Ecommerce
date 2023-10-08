@@ -6,12 +6,12 @@ import { Search, ShoppingCartOutlined } from '@mui/icons-material'
 const Container = styled.div`
 width: 100%;
 height: 60px;
-
+padding-bottom: 5px;
 `
 
 const Wrapper = styled.div`
-    padding: 10px 20px;
-    display: flex;
+     padding: 0px 20px;
+        display: flex;
     align-items: center;
     justify-content: space-between;
     
@@ -72,7 +72,7 @@ const Navbar = () => {
                     <Language>ENG</Language>
                     <SearchContainer>
                         <Input />
-                        <Search style={{border: "none", color:"grey", fontSize:16}}/>
+                        <Search style={{color:"grey", fontSize:16}}/>
 
                     </SearchContainer>
                 </Left>
