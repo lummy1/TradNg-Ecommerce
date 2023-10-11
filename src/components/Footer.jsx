@@ -8,11 +8,12 @@ import {
     Twitter,
   } from "@mui/icons-material";
   import styled from "styled-components";
+import { mobile } from "../responsive";
 
   
   const Container = styled.div`
     display: flex;
-   
+    ${mobile({flexDirection: "column"})}
   `;
   
   const Left = styled.div`
@@ -26,6 +27,7 @@ import {
   
   const Desc = styled.p`
     margin: 20px 0px;
+    ${mobile({display: "none"})}
   `;
   
   const SocialContainer = styled.div`
@@ -47,7 +49,7 @@ import {
   const Center = styled.div`
     flex: 1;
     padding: 20px;
-    
+    ${mobile({display: "none"})}
   `;
   
   const Title = styled.h3`
@@ -87,7 +89,7 @@ import {
     return (
       <Container>
         <Left>
-          <Logo>ShoppersLeagueNg.</Logo>
+          <Logo>TradNg.</Logo>
           <Desc>
             Exquisite Taditional Outfits and casuals. 
             There are also a wide range of traditional accessories which stands you out of the crowd.
@@ -131,7 +133,7 @@ import {
             <Phone style={{marginRight:"10px"}}/> +1 234 56 78
           </ContactItem>
           <ContactItem>
-            <MailOutline style={{marginRight:"10px"}} /> contact@shoppersLeagueng.com
+            <MailOutline style={{marginRight:"10px"}} /> contact@tradng.com
           </ContactItem>
           <Payment src="https://i.ibb.co/Qfvn4z6/payment.png" />
         </Right>
