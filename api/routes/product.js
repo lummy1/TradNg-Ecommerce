@@ -70,7 +70,7 @@ router.get('/:id', async (req, res) => {
 router.get('/', async (req, res) => {
   const qlimit = req.query.limit;
   const qCategory = req.query.category;
-  // console.log(query, limit)
+   console.log(qCategory, qlimit);
   try {
     //
     let products;
@@ -90,6 +90,9 @@ router.get('/', async (req, res) => {
     res.status(500).json(err);
   }
 });
+
+
+
 
 //UPDATE
 router.put('/:id', verifyTokenAndAdmin, async (req, res) => {

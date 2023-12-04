@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import Navbar from '../components/Navbar'
 import Annoucements from '../components/Annoucements'
@@ -6,6 +6,9 @@ import Newsletter from '../components/Newsletter'
 import Footer from '../components/Footer'
 import { Add, Remove } from '@mui/icons-material'
 import { mobile } from '../responsive'
+import { useLocation } from 'react-router-dom'
+import axios from 'axios'
+import { publicRequest } from '../requestMethods'
 
 
 const Container= styled.div``
@@ -121,47 +124,94 @@ cursor: pointer;
 `
 
 const SingleProduct = () => {
+
+  const location = useLocation();
+  const id= location.pathname.split("/")[2];
+  console.log(id);
+
+  const [product, setProduct] = useState({});
+  const [quantity, setQuantity] = useState(1);
+  const [color, setColor] = useState("");
+  const [size, setSize] = useState("");
+
+
+  useEffect(()=>{
+
+    const getProduct = async ()=>{
+
+      try {
+
+        const response= await publicRequest.get("/products/"+id)
+        console.log(response);
+        setProduct(response.data);
+      } catch (error) {
+        
+        console.log(error);
+      }
+
+    }
+
+    getProduct();
+  }, [id])
+
+  const handleQuantity = (type)=>{
+
+      if(type === "dec"){
+
+        quantity > 1 && setQuantity(quantity - 1);
+      }else{
+        setQuantity(quantity + 1);
+      }
+
+  }
+
+  console.log(color);
+  console.log(size);
   return (
     <Container>
         <Navbar />
         <Annoucements />
         <Wrapper>
           <ImgContainer>
-          <Img src="https://ecoms.imgix.net/banner/couple7.png" />
+          <Img src={product.image} />
           
           </ImgContainer>
           <InfoContainer>
-            <Title>Tester Product</Title>
-            <Desc>Tester ProductTester ProductTester ProducTester ProductTester 
-            ProductTester ProductTester ProductTester ProductTester ProductTeste
-            r ProductTester ProductTester Productt
+            <Title>{product.title}</Title>
+            <Desc>{product.desc}
             </Desc>
-            <Price>N200</Price>
+            <Price>N{product.price}</Price>
             <FilterContainer>
               <Filter>
                   <FilterTitle>Color</FilterTitle>
-                  <FilterColor color="black" />
-                  <FilterColor color="darkblue" />
-                  <FilterColor color="brown" />
+                  {product.color?.map((c)=>(
+
+                    <FilterColor color={c} key={c} onClick={() => setColor(c)}/>
+
+                  ))}
+                  
               </Filter>
               <Filter>
               <FilterTitle>Size</FilterTitle>
-                 <SizeSelect>
-                    <SizeOption>XS</SizeOption>
-                    <SizeOption>S</SizeOption>
-                    <SizeOption>M</SizeOption>
-                    <SizeOption>L</SizeOption>
-                    <SizeOption>XL</SizeOption>
+                 <SizeSelect  onChange={(e) => setSize(e.target.value)}>
+                   
+                    {product.size?.map((s)=>(
+
+                      <SizeOption key={s} >{s}</SizeOption>
+
+
+                    ))}
+                  
                </SizeSelect>
               </Filter>
             </FilterContainer>
             <AddContainer>
               <QtyContainer>
-                <Remove/>
+                <Remove onClick={(e)=> handleQuantity("dec")} />
                 <Qty>
-                  1
+                  {quantity}
                 </Qty>
-                <Add/>
+                <Add onClick= {e=> handleQuantity("inc")}/>
               </QtyContainer>
               <Btn>ADD TO CART</Btn>
             </AddContainer>

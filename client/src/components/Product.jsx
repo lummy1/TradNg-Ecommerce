@@ -1,6 +1,7 @@
 import { FavoriteBorderOutlined, SearchOutlined, ShoppingCartOutlined } from '@mui/icons-material'
 import React from 'react'
 import styled from 'styled-components'
+import { Link, useLocation } from 'react-router-dom'
 
 const Info = styled.div`
 opacity: 0;
@@ -64,21 +65,37 @@ transition: all  0.5s ease;
 }
 
 `
+
+const Title = styled.span`
+    display: flex;
+    margin: 150px 0px;
+    font-weight: 60 bold;
+    font-size: 30px ;
+
+    z-index: 2;
+    position: absolute;
+`
     
 
 
 
 const Product = ({item}) => {
+
+  
+
   return (
     <Container>
         <Circle />
-        <Img src={item.img} />
+        <Img src={item.image} />
+        <Title>{item.title}</Title>
         <Info>
             <Icon>
                 <ShoppingCartOutlined />
             </Icon>
             <Icon>
+                <Link to={`/product/${item._id}`}>
                 <SearchOutlined />
+                </Link>
             </Icon>
             <Icon>
                 <FavoriteBorderOutlined />
