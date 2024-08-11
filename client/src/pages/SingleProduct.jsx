@@ -1,14 +1,15 @@
-import React, { useEffect, useState } from 'react'
-import styled from 'styled-components'
-import Navbar from '../components/Navbar'
-import Annoucements from '../components/Annoucements'
-import Newsletter from '../components/Newsletter'
-import Footer from '../components/Footer'
-import { Add, Remove } from '@mui/icons-material'
-import { mobile } from '../responsive'
-import { useLocation } from 'react-router-dom'
-import axios from 'axios'
+import React, { useEffect, useState } from 'react';
+import styled from 'styled-components';
+import Navbar from '../components/Navbar';
+import Annoucements from '../components/Annoucements';
+import Newsletter from '../components/Newsletter';
+import Footer from '../components/Footer';
+import { Add, Remove } from '@mui/icons-material';
+import { mobile } from '../responsive';
+import { useLocation } from 'react-router-dom';
 import { publicRequest } from '../requestMethods'
+import { addProduct } from '../redux/cartRedux';
+import { useDispatch } from 'react-redux';
 
 
 const Container= styled.div``
@@ -127,12 +128,11 @@ const SingleProduct = () => {
 
   const location = useLocation();
   const id= location.pathname.split("/")[2];
-  console.log(id);
-
   const [product, setProduct] = useState({});
   const [quantity, setQuantity] = useState(1);
   const [color, setColor] = useState("");
   const [size, setSize] = useState("");
+  const dispatch = useDispatch();
 
 
   useEffect(()=>{
@@ -165,6 +165,10 @@ const SingleProduct = () => {
 
   }
 
+  const handleAddCart = ()=>{
+    dispatch(addProduct({ ...product, quantity, color, size }));
+    
+  }
   console.log(color);
   console.log(size);
   return (
@@ -213,7 +217,7 @@ const SingleProduct = () => {
                 </Qty>
                 <Add onClick= {e=> handleQuantity("inc")}/>
               </QtyContainer>
-              <Btn>ADD TO CART</Btn>
+              <Btn onClick={handleAddCart}>ADD TO CART</Btn>
             </AddContainer>
           </InfoContainer>
         </Wrapper>

@@ -1,10 +1,19 @@
-import React from 'react'
-import Navbar from '../components/Navbar'
-import Annoucements from '../components/Annoucements'
-import Footer from '../components/Footer'
-import styled from 'styled-components'
-import { Add, Remove } from '@mui/icons-material'
-import { mobile } from '../responsive'
+import React, { useEffect } from 'react';
+import Navbar from '../components/Navbar';
+import Annoucements from '../components/Annoucements';
+import Footer from '../components/Footer';
+import styled from 'styled-components';
+import { Add, Remove } from '@mui/icons-material';
+import { mobile } from '../responsive';
+import { useSelector } from 'react-redux';
+import { useState } from 'react';
+import { Link } from 'react-router-dom';
+import StripeCheckout from 'react-stripe-checkout';
+
+const STRIPE_KEY= process.env.REACT_APP_STRIPEKEY;
+
+
+
 
 const Container = styled.div``
     
@@ -159,6 +168,26 @@ background-color: black;
 color: white;
 `
 const Cart = () => {
+
+   
+    console.log(STRIPE_KEY);
+    const [stripeToken, setStripeToken] = useState(null);
+    const [updatedQuantity, setUpdatedQuantity] = useState(0);
+    const cart = useSelector(state=>state.cart);
+
+ console.log(cart);
+ const onToken = (token) =>{
+       
+        setStripeToken(token);
+       
+    }
+    console.log(stripeToken);
+
+    useEffect(()=>{
+
+
+    },[stripeToken])
+
   return (
     <Container>
         <Navbar />
@@ -166,60 +195,55 @@ const Cart = () => {
     <Wrapper>
         <Title> Product Cart </Title>
         <Top>
+            <Link to="../">
             <TopBtn>CONTINUE SHOPPING</TopBtn>
+            </Link>
             <TopTexts>
-                <TopText>Shooping Bag(2)</TopText>
+                <TopText>Shooping Bag({cart.count})</TopText>
                 <TopText>Your Wishlist(5)</TopText>
             </TopTexts>
             <TopBtn type="filled">CHECKOUT NOW</TopBtn>
         </Top>
         <Bottom>
             <Info>
-                <Product>
+            {cart.products.map((product) => (
+
+                <Product key={product._id}>
                     <ProductDetail>
-                       <Image src="https://ecoms.imgix.net/banner/item4.jpg" />
+                       <Image src={product.image} />
                        <Details>
-                        <ProductName><b>Product: </b>Exquisite Taditional Outfits</ProductName>
-                        <ProductId><b>ID: </b>1234354</ProductId>
-                        <ProductColor color="black" />
-                        <ProductSize><b>Size: </b>23.5</ProductSize>
+                        <ProductName><b>Product: </b>{product.title}</ProductName>
+                        <ProductId><b>ID: </b>{product._id}</ProductId>
+                        <ProductColor color={product.color} />
+                        <ProductSize><b>Size: </b>{product.size}</ProductSize>
                        </Details>
                     </ProductDetail>
                     <PriceDetail>
                         <ProductAmtContainer>
-                            <Add />
-                            <ProductAmount>2</ProductAmount>
-                            <Remove />
+                            <Add onClick={()=>
+                                console.log("clicked")
+                                //item.quantity+1
+                            } />
+                            <ProductAmount>{product.quantity}</ProductAmount>
+                            <Remove onClick="handleClick(dec)" />
                         </ProductAmtContainer>
-                        <ProductPrice>N 200</ProductPrice>
+                        <ProductPrice>N {product.price * product.quantity}</ProductPrice>
                     </PriceDetail>
                 </Product>
-                <Hr />
-                <Product>
-                    <ProductDetail>
-                       <Image src="https://hips.hearstapps.com/vader-prod.s3.amazonaws.com/1614188818-TD1MTHU_SHOE_ANGLE_GLOBAL_MENS_TREE_DASHERS_THUNDER_b01b1013-cd8d-48e7-bed9-52db26515dc4.png?crop=1xw:1.00xh;center,top&resize=480%3A%2A" />
-                       <Details>
-                        <ProductName><b>Product: </b>Exquisite Taditional Outfits</ProductName>
-                        <ProductId><b>ID: </b>1234354</ProductId>
-                        <ProductColor color="black" />
-                        <ProductSize><b>Size: </b>23.5</ProductSize>
-                       </Details>
-                    </ProductDetail>
-                    <PriceDetail>
-                        <ProductAmtContainer>
-                            <Add />
-                            <ProductAmount>2</ProductAmount>
-                            <Remove />
-                        </ProductAmtContainer>
-                        <ProductPrice>N 200</ProductPrice>
-                    </PriceDetail>
-                </Product>
+               
+               
+            ))
+            
+            }
+                
+               
+               
             </Info>
             <Summary>
                 <SummaryTitle>ORDER SUMMARY</SummaryTitle>
                 <SummaryItem>
                     <SummaryItemText>Subtotal</SummaryItemText>
-                    <SummaryItemPrice>N 120</SummaryItemPrice>
+                    <SummaryItemPrice>N {cart.total}</SummaryItemPrice>
                 </SummaryItem>
                 <SummaryItem>
                     <SummaryItemText>Delivery Estimate </SummaryItemText>
@@ -231,9 +255,20 @@ const Cart = () => {
                 </SummaryItem>
                 <SummaryItem  type="total">
                     <SummaryItemText>Total</SummaryItemText>
-                    <SummaryItemPrice>N 120</SummaryItemPrice>
+                    <SummaryItemPrice>N {cart.total}</SummaryItemPrice>
                 </SummaryItem>
-                <Btn>CHECKOUT NOW</Btn>
+                <StripeCheckout
+       name = "Tradng. Store"
+       image = "https://business23.web-hosting.com:2096/cpsess9103547663/3rdparty/roundcube/skins/elastic/images/logo.svg?s=1670945592"
+       billingAddress
+       shippingAddress
+       description={`Your total is N${cart.total}`}
+       amount={cart.total*100}
+       token={onToken}
+        stripeKey={STRIPE_KEY}
+      > 
+                <Btn >CHECKOUT NOW</Btn>
+            </StripeCheckout>
             </Summary>
         </Bottom>
     </Wrapper>
