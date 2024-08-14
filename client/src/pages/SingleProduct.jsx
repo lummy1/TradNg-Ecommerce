@@ -7,7 +7,7 @@ import Footer from '../components/Footer';
 import { Add, Remove } from '@mui/icons-material';
 import { mobile } from '../responsive';
 import { useLocation } from 'react-router-dom';
-import { publicRequest } from '../requestMethods'
+import { publicRequest } from '../helpers/requestMethods'
 import { addProduct } from '../redux/cartRedux';
 import { useDispatch } from 'react-redux';
 

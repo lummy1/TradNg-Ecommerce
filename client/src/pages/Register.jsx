@@ -1,16 +1,22 @@
 import React from 'react'
 import styled from 'styled-components'
 import { mobile } from '../responsive';
+import Navbar from '../components/Navbar';
+import Annoucements from '../components/Annoucements';
 
-const Container = styled.div`
+import Footer from "../components/Footer";
+
+const Container = styled.div``
+
+const FormContainer = styled.div`
   width: 100vw;
   height: 100vh;
   background: linear-gradient(
       rgba(255, 255, 255, 0.5),
       rgba(255, 255, 255, 0.5)
     ),
-    url("https://ecoms.imgix.net/banner/03.jpg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940")
-      center;
+    url("https://moloyal.com/trads/banner1.jpg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=1000")
+        center;
   background-size: cover;
   display: flex;
   align-items: center;
@@ -58,7 +64,11 @@ const Btn = styled.button`
 
 const Register = () => {
   return (
+    
     <Container>
+      <Navbar />
+      <Annoucements />
+      <FormContainer>
         <Wrapper>
             <Title>CREATE AN ACCOUNT       </Title>
             <Form>
@@ -76,7 +86,11 @@ const Register = () => {
                 <Btn>Submit</Btn>
             </Form>
         </Wrapper>
+        </FormContainer>
+        <Footer />
+        
     </Container>
+    
   )
 }
 

@@ -1,14 +1,21 @@
 import styled from "styled-components";
 import {mobile} from "../responsive";
+import Navbar from '../components/Navbar';
+import Annoucements from '../components/Annoucements';
 
-const Container = styled.div`
+import Footer from "../components/Footer";
+import { history } from '../helpers/history';
+
+const Container = styled.div``
+
+const FormContainer = styled.div`
   width: 100vw;
   height: 100vh;
   background: linear-gradient(
       rgba(255, 255, 255, 0.5),
       rgba(255, 255, 255, 0.5)
     ),
-    url("https://images.pexels.com/photos/6984650/pexels-photo-6984650.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940")
+    url("https://moloyal.com/trads/banner1.jpg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=1000")
       center;
   background-size: cover;
   display: flex;
@@ -61,6 +68,9 @@ const Link = styled.a`
 const Login = () => {
   return (
     <Container>
+      <Navbar />
+      <Annoucements />
+      <FormContainer>
       <Wrapper>
         <Title>SIGN IN</Title>
         <Form>
@@ -71,6 +81,8 @@ const Login = () => {
           <Link>CREATE A NEW ACCOUNT</Link>
         </Form>
       </Wrapper>
+      </FormContainer>
+      <Footer />
     </Container>
   );
 };

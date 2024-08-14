@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import Product from './Product';
 import  axios from "axios";
+import { publicRequest } from '../helpers/requestMethods';
 
 const Container = styled.div`
     padding: 20px;
@@ -22,8 +23,8 @@ const Products = ({filters, cat, sort}) => {
     const getProducts = async ()=>{
 
       try {
-
-        const response = await axios.get( cat ? `http://localhost:5000/api/products?category=${cat}` : `http://localhost:5000/api/products` );
+       // publicRequest.get("/products/"+id)
+        const response = await  publicRequest.get( cat ? `/products?category=${cat}` : `/products` );
     
        // const response = await axios.get( cat ? `http://localhost:5000/api/products?category=${cat}` : `http://localhost:5000/api/products` );
         setProducts(response.data);

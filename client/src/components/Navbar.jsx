@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { Badge } from '@mui/material';
 import { Search, ShoppingCartOutlined } from '@mui/icons-material';
 import {mobile} from "../responsive";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { Link } from 'react-router-dom';
 
 
@@ -57,6 +57,7 @@ const Center = styled.div`
 
 const Logo = styled.h1`
     font-weight: bold;
+    text-decoration: none;
     ${mobile({fontSize: "20px"})}
 `
 
@@ -73,12 +74,23 @@ cursor: pointer;
 margin-left: 25px;
 ${mobile({fontSize: "12px", marginLeft: "10px"})}
 `
+const LogoItem = styled.div`
 
+cursor: pointer;
+ text-decoration: none;
+
+`
 
 const Navbar = () => {
 
     const count = useSelector(state=>state.cart.count)
-
+   
+         const auth = useSelector(x => x.auth.value);
+        // const dispatch = useDispatch();
+        // const logout = () => dispatch(authActions.logout());
+    
+        // only show nav when logged in
+        if (!auth) return null;
     //console.log(cart.count);
     return (
         <Container>
@@ -92,11 +104,11 @@ const Navbar = () => {
                     </SearchContainer>
                 </Left>
                 <Center>
-                    <Logo>TradNg.</Logo>
+                <Link to="/"> <Logo> <LogoItem>TradNg.</LogoItem></Logo></Link>
                 </Center>
                 <Right>
-                    <MenuItem>REGISTER</MenuItem>
-                    <MenuItem>SIGN IN</MenuItem>
+                <Link to="../register"> <MenuItem>REGISTER</MenuItem></Link>
+                <Link to="../login"> <MenuItem>SIGN IN</MenuItem></Link>
                     <Link to="../cart">
                     <MenuItem>
                         <Badge color="primary" badgeContent={count}>
