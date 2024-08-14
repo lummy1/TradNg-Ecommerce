@@ -83,14 +83,14 @@ cursor: pointer;
 
 const Navbar = () => {
 
-    const count = useSelector(state=>state.cart.count)
+    const count = useSelector(state=>state.cart.count);
    
-         const auth = useSelector(x => x.auth.value);
+        
         // const dispatch = useDispatch();
         // const logout = () => dispatch(authActions.logout());
     
         // only show nav when logged in
-        if (!auth) return null;
+       // if (!auth) return null;
     //console.log(cart.count);
     return (
         <Container>
